@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: [object Object]
+	@module can-construct-super
+######################################################################## -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/bit-docs-site/static.css">
+	
+</head>
+	<body>
+		<input type="checkbox" id="nav-trigger" class="nav-trigger"/>
+	  <label for="nav-trigger">Menu</label>
+	  <div id="everything">
+  <div id="left" class="column">
+    <div class="top-left">
+      
+          <div class="brand">
+	<a href="../index.html">CanJS</a>
+</div>
+<div class="version">
+	<p>Version 3.0.0-pre</p>
+</div>
+
+      
+    </div>
+    <div class="bottom-left">
+      
+          
+
+      
+    </div>
+  </div>
+  <div id="right" class="column">
+    <div class="top-right">
+      <div class="top-right-top">
+  
+<ul class="top-right-bitovi">
+  <li class="dropdown">
+    <a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://bitovi.com">Bitovi.com</a></li>
+      <li><a href="http://bitovi.com/blog/">Blog</a></li>
+      <li><a href="http://bitovi.com/consulting/">Consulting</a></li>
+      <li><a href="http://bitovi.com/training/">Training</a></li>
+      <li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="top-right-links">
+  <li>
+    <a href="https://gitter.im/canjs/canjs">Chat</a>
+  </li>
+  <li>
+    <a href="http://forums.donejs.com/c/canjs">Forum</a>
+  </li>
+  <li>
+    <a class="github-button nav-social" href="https://github.com/canjs/canjs" data-count-href="/canjs/canjs/stargazers" data-count-api="/repos/canjs/canjs#stargazers_count">Star</a>
+  </li>
+  <li>
+    <a href="https://twitter.com/canjs" class="twitter-follow-button nav-social" data-show-count="true" data-show-screen-name="false">Follow @canjs</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </li>
+</ul>
+</div>
+<div class="breadcrumb">
+	
+	
+	<li><a href="can-construct-super.html">can-construct-super</a></li> /
+	
+	<li class="breadcrumb-dropdown"><a href="#"> On this page</a>
+	  <ul class="on-this-page"></ul>
+	</li>
+</div>
+
+    </div>
+    <div class="bottom-right">
+      <article>
+  <section class="title">
+	<h1>can-construct-super</h1>
+	<ul class="title-social">
+		
+		
+	</ul>
+</section>
+
+
+
+
+  
+    <section class="description">
+    <p>can.Construct.super is a plugin that makes it easier to call base
+functions from inside inheriting functions.</p>
+
+</section>
+
+  
+
+
+
+
+<div class="signature">
+  <h2 class="signature-title">
+    <code>construct._super([...args])</code>
+  </h2>
+  <p>Calls the base constructor function's method.</p>
+
+  
+  <div class="parameters">
+    <h3 class="parameters-title">Parameters</h3>
+      <ol>
+        
+          <li><b>args</b> <code>{Any}</code>: <p>parameters to pass to the base function</p>
+</li>
+        
+      </ol>
+  </div>
+  
+  
+  
+</div>
+
+
+
+
+  
+    <section class="body">
+    <p>With this plugin, functions that are inheriting from base functions
+are provided with a specialized <code>this._super</code> reference to the base
+function from which they inherit.</p>
+<p>This is especially useful for calling base classes' <code><a href="can-construct.prototype.init.html">init</a></code> and <code><a href="can-construct.prototype.setup.html">setup</a></code>, but it can be used in any inheriting function.</p>
+<p>The <code>Person</code> and <code>Programmer</code> examples from <code><a href="can-construct.prototype.init.html">init</a></code> demonstrate <code>_super</code>'s use.
+Here's how those classes look without can.Construct.super:</p>
+<pre><code>var Person = Construct.extend({
+    init: function(first, last) {
+        this.first = first;
+        this.last  = last;
+    }
+});
+
+var Programmer = Person.extend({
+    init: function(first, last, language) {
+        // call base's init
+        Person.prototype.init.apply(this, arguments);
+
+        // other initialization code
+        this.language = language;
+    },
+    bio: function() {
+        return &quot;Hi! I'm &quot; + this.first + &quot; &quot; + this.last +
+            &quot; and I write &quot; + this.language + &quot;.&quot;;
+    }
+});
+</code></pre>
+<p>And here's how <code>Programmer</code> works using <code>_super</code>:</p>
+<pre><code>var Programmer = Person.extend({
+    init: function(first, last, language) {
+        // call base's init
+        this._super(first, last);
+
+        // other initialization code
+        this.language = language;
+    },
+    bio: function() {
+        return &quot;Hi! I'm &quot; + this.first + &quot; &quot; + this.last +
+            &quot; and I write &quot; + this.language + &quot;.&quot;;
+    }
+});
+</code></pre>
+<p>If you want to pass an array of arguments (or an arguments object) to <code>_super</code>, use <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/apply">apply</a>:</p>
+<pre><code>var Programmer = Person.extend({
+    init: function(first, last, language) {
+        // call base's init
+        this._super.apply(this, arguments);
+
+        // other initialization code
+        this.language = language;
+    },
+    bio: function() {
+        return &quot;Hi! I'm &quot; + this.first + &quot; &quot; + this.last +
+            &quot; and I write &quot; + this.language + &quot;.&quot;;
+    }
+});
+</code></pre>
+<h2><code>_super</code> on constructors</h2>
+<p>can.Construct.super also adds <code>super</code> to the constructor, so you
+can use it in static functions.</p>
+<p>Here is a base class that has a method that squares numbers and an inherited class that has a method that cubes numbers:</p>
+<pre><code>var Squarer = can.Construct.extend({
+    raise: function(n) {
+        return n*n;
+    }
+}, {});
+
+var Cuber = Squarer.extend({
+    raise: function(n) {
+        return n * this._super(n);
+    }
+}, {});
+</code></pre>
+
+</section>
+
+  
+</article>
+      <footer><p>CanJS is part of <a href="http://donejs.com">DoneJS</a>. Created and maintained by the open source team at <a href="http://bitovi.com">Bitovi</a>. <strong>Currently v3.0.0.</strong></p></footer>
+    </div>
+  </div>
+</div>
+
+		<script type="text/javascript">
+		var docObject = {"src":{"path":"node_modules/can-construct-super/can-construct-super.md"},"description":"\ncan.Construct.super is a plugin that makes it easier to call base\nfunctions from inside inheriting functions.\n","type":"module","title":"","name":"can-construct-super","parent":"can-construct.plugins","plugin":"can-construct-super","signatures":[{"code":"construct._super([...args])","description":"\n\nCalls the base constructor function's method.\n","params":[{"types":[{"type":"Any"}],"variable":true,"name":"args","description":"parameters to pass to the base function\n"}]}],"_curParam":{"types":[{"type":"Any"}],"variable":true,"name":"args","description":"parameters to pass to the base function\n"},"comment":" ","pathToRoot":".."};
+		</script>
+		
+		<script>
+			steal = {
+			  instantiated: {
+			    "bundles/bit-docs-site/static.css!$css" : null
+			  }
+			}
+		</script>
+		<script type='text/javascript' data-main="bit-docs-site/static" src="./static/node_modules/steal/steal.production.js"></script>
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: [object Object]
+	@page CreateALiveTimestamp
+######################################################################## -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/bit-docs-site/static.css">
+	
+</head>
+	<body>
+		<input type="checkbox" id="nav-trigger" class="nav-trigger"/>
+	  <label for="nav-trigger">Menu</label>
+	  <div id="everything">
+  <div id="left" class="column">
+    <div class="top-left">
+      
+          <div class="brand">
+	<a href="../index.html">CanJS</a>
+</div>
+<div class="version">
+	<p>Version 3.0.0-pre</p>
+</div>
+
+      
+    </div>
+    <div class="bottom-left">
+      
+          
+
+      
+    </div>
+  </div>
+  <div id="right" class="column">
+    <div class="top-right">
+      <div class="top-right-top">
+  
+<ul class="top-right-bitovi">
+  <li class="dropdown">
+    <a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://bitovi.com">Bitovi.com</a></li>
+      <li><a href="http://bitovi.com/blog/">Blog</a></li>
+      <li><a href="http://bitovi.com/consulting/">Consulting</a></li>
+      <li><a href="http://bitovi.com/training/">Training</a></li>
+      <li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="top-right-links">
+  <li>
+    <a href="https://gitter.im/canjs/canjs">Chat</a>
+  </li>
+  <li>
+    <a href="http://forums.donejs.com/c/canjs">Forum</a>
+  </li>
+  <li>
+    <a class="github-button nav-social" href="https://github.com/canjs/canjs" data-count-href="/canjs/canjs/stargazers" data-count-api="/repos/canjs/canjs#stargazers_count">Star</a>
+  </li>
+  <li>
+    <a href="https://twitter.com/canjs" class="twitter-follow-button nav-social" data-show-count="true" data-show-screen-name="false">Follow @canjs</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </li>
+</ul>
+</div>
+<div class="breadcrumb">
+	
+	
+	<li><a href="CreateALiveTimestamp.html">Create a Live Timestamp</a></li> /
+	
+	<li class="breadcrumb-dropdown"><a href="#"> On this page</a>
+	  <ul class="on-this-page"></ul>
+	</li>
+</div>
+
+    </div>
+    <div class="bottom-right">
+      <article>
+  <section class="title">
+	<h1>Create a Live Timestamp</h1>
+	<ul class="title-social">
+		
+		
+	</ul>
+</section>
+
+
+
+
+  
+    <section class="description">
+    
+</section>
+
+  
+
+
+
+
+
+
+
+  
+    <section class="body">
+    <p>This recipe demonstrates how to generate a 'live' timestamp
+that displays in a human-readable format. This means handling
+application state that changes over time, as well as making
+information rendered in a template human-readable using a helper function.</p>
+<p>First, we’ll add a <code>createdAt</code> property to the data like:</p>
+<pre><code> var data = new can.Map({
+   message: &quot;Hello World&quot;,
+   createdAt: new Date()
+ });
+</code></pre>
+<p>On the page, this should be displayed as a human readable
+timestamp:</p>
+<pre><code> &lt;h1&gt;Hello World &lt;i&gt;created just now&lt;/i&gt;&lt;/h1&gt;
+</code></pre>
+<p><strong>and</strong> as time passes, the timestamp will update to:</p>
+<pre><code>&lt;h1&gt;Hello World &lt;i&gt;created a few seconds ago&lt;/i&gt;&lt;/h1&gt;
+</code></pre>
+<p><strong>and</strong> then update to &quot;some seconds ago&quot; and so forth.</p>
+<p>To accomplish this, create a <code>prettyDate</code> <a href="../docs/can.stache.helper.html">stache helper</a> that converts
+dates into a human readable format.  A helper function is called from within the template where its result
+will be displayed.  The following calls <code>prettyDate</code> with an observable value of <code>createdAt</code>.</p>
+<pre><code>&lt;h1&gt;
+  {{message}}
+  &lt;i&gt;created {{prettyDate createdAt}}&lt;/i&gt;
+&lt;/h1&gt;
+</code></pre>
+<p>To call a function from a template, <a href="../docs/can.stache.registerHelper.html">register</a> it with <code>can.view</code>.
+The third argument passed to <code>can.view</code> is an object with helper functions, so the <code>dateHelper</code> function
+can be registered as <code>prettyView</code>.</p>
+<pre><code>var dateHelper = function ( date ) {
+    //helper function
+};
+
+var frag = can.view(&quot;app-template&quot;, data, {prettyDate: dateHelper});
+</code></pre>
+<p>In this helper, <code>date</code> is not a Date object, instead it is an observable <a href="../docs/can.compute.html">can.compute</a> that
+contains the <code>createdAt</code> value.  A <code>can.compute</code> is an observable that contains a single value.  To read the value,
+call the compute like you would any other function:</p>
+<pre><code>date() //-&gt; Date
+</code></pre>
+<p>We need to compare <code>date</code> with the current time. The current time
+will be represented by a compute:</p>
+<pre><code>var now = can.compute( new Date() )
+</code></pre>
+<p>As the current time changes, we update <code>now</code> with the new time. To change the value of a <code>can.compute</code>,
+call it with its new value as an argument:</p>
+<pre><code>// update that property every second
+setTimeout(function(){
+    now( new Date() );
+    setTimeout(arguments.callee, 1000);
+}, 1000)
+</code></pre>
+<p>The <code>prettyDate</code> helper will read and compare the <code>date</code> and <code>now</code> compute to
+get the time elapsed in seconds:</p>
+<pre><code>var timeElapsed = ( now() - date() ) / 1000
+</code></pre>
+<p>Using the <code>timeElapsed</code>, <code>prettyDate</code> returns human readable timestamps:</p>
+<pre><code>if(timeElapsed &lt; 1.2){
+    return &quot;just now&quot;
+} else if (timeElapsed &lt; 10) {
+    return &quot;a couple seconds ago&quot;
+}
+...
+else {
+    return Math.round(difference/60)+&quot; minutes ago&quot;
+}
+</code></pre>
+<iframe width="100%" height="300" src="http://jsfiddle.net/donejs/VQNSH/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
+
+</section>
+
+  
+</article>
+      <footer><p>CanJS is part of <a href="http://donejs.com">DoneJS</a>. Created and maintained by the open source team at <a href="http://bitovi.com">Bitovi</a>. <strong>Currently v3.0.0.</strong></p></footer>
+    </div>
+  </div>
+</div>
+
+		<script type="text/javascript">
+		var docObject = {"src":{"path":"docs/can-guides/recipes/create-a-live-timestamp.md"},"description":"\n","name":"CreateALiveTimestamp","title":"Create a Live Timestamp","type":"page","parent":"Recipes","order":3,"comment":" ","pathToRoot":".."};
+		</script>
+		
+		<script>
+			steal = {
+			  instantiated: {
+			    "bundles/bit-docs-site/static.css!$css" : null
+			  }
+			}
+		</script>
+		<script type='text/javascript' data-main="bit-docs-site/static" src="./static/node_modules/steal/steal.production.js"></script>
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
+</html>

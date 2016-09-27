@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: [object Object]
+	@page ShowAndHideElements
+######################################################################## -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/bit-docs-site/static.css">
+	
+</head>
+	<body>
+		<input type="checkbox" id="nav-trigger" class="nav-trigger"/>
+	  <label for="nav-trigger">Menu</label>
+	  <div id="everything">
+  <div id="left" class="column">
+    <div class="top-left">
+      
+          <div class="brand">
+	<a href="../index.html">CanJS</a>
+</div>
+<div class="version">
+	<p>Version 3.0.0-pre</p>
+</div>
+
+      
+    </div>
+    <div class="bottom-left">
+      
+          
+
+      
+    </div>
+  </div>
+  <div id="right" class="column">
+    <div class="top-right">
+      <div class="top-right-top">
+  
+<ul class="top-right-bitovi">
+  <li class="dropdown">
+    <a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://bitovi.com">Bitovi.com</a></li>
+      <li><a href="http://bitovi.com/blog/">Blog</a></li>
+      <li><a href="http://bitovi.com/consulting/">Consulting</a></li>
+      <li><a href="http://bitovi.com/training/">Training</a></li>
+      <li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="top-right-links">
+  <li>
+    <a href="https://gitter.im/canjs/canjs">Chat</a>
+  </li>
+  <li>
+    <a href="http://forums.donejs.com/c/canjs">Forum</a>
+  </li>
+  <li>
+    <a class="github-button nav-social" href="https://github.com/canjs/canjs" data-count-href="/canjs/canjs/stargazers" data-count-api="/repos/canjs/canjs#stargazers_count">Star</a>
+  </li>
+  <li>
+    <a href="https://twitter.com/canjs" class="twitter-follow-button nav-social" data-show-count="true" data-show-screen-name="false">Follow @canjs</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </li>
+</ul>
+</div>
+<div class="breadcrumb">
+	
+	
+	<li><a href="ShowAndHideElements.html">Show and Hide Elements</a></li> /
+	
+	<li class="breadcrumb-dropdown"><a href="#"> On this page</a>
+	  <ul class="on-this-page"></ul>
+	</li>
+</div>
+
+    </div>
+    <div class="bottom-right">
+      <article>
+  <section class="title">
+	<h1>Show and Hide Elements</h1>
+	<ul class="title-social">
+		
+		
+	</ul>
+</section>
+
+
+
+
+  
+    <section class="description">
+    
+</section>
+
+  
+
+
+
+
+
+
+
+  
+    <section class="body">
+    <p>Instead of showing and hiding elements by changing the DOM
+directly like:</p>
+<pre><code>$(&quot;h1&quot;).show()
+$(&quot;h1&quot;).hide()
+</code></pre>
+<p>Make the template show or hide those elements when a value
+changes.</p>
+<pre><code>{{#if visible}}
+  &lt;h1&gt;{{message}}&lt;/h1&gt;
+{{/if}}
+</code></pre>
+<p>When the button is clicked, change the observable value.</p>
+<pre><code>data.attr(&quot;visible&quot;, !data.attr(&quot;visible&quot;))
+</code></pre>
+<iframe width="100%" height="300" src="http://jsfiddle.net/donejs/eFss4/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
+<h3>Application State</h3>
+<p>Typically, it’s not a good idea to mix view state and application data.
+In the previous example, the <code>message</code> is application data, while the
+<code>visible</code> property represents view state. In CanJS, state and data
+should be separated using different observables.</p>
+<pre><code>var data = new can.Map({message: &quot;Hello World!&quot;}),
+    state = new can.Map({visible: true});
+
+var frag = can.view(&quot;app-template&quot;, {
+  data: data,
+  state: state
+});
+</code></pre>
+<p>As an application gets more complex, separating state from data
+makes things more maintainable.</p>
+
+</section>
+
+  
+</article>
+      <footer><p>CanJS is part of <a href="http://donejs.com">DoneJS</a>. Created and maintained by the open source team at <a href="http://bitovi.com">Bitovi</a>. <strong>Currently v3.0.0.</strong></p></footer>
+    </div>
+  </div>
+</div>
+
+		<script type="text/javascript">
+		var docObject = {"src":{"path":"docs/can-guides/recipes/show-and-hide-elements.md"},"description":"\n","name":"ShowAndHideElements","title":"Show and Hide Elements","type":"page","parent":"Recipes","order":3,"comment":" ","pathToRoot":".."};
+		</script>
+		
+		<script>
+			steal = {
+			  instantiated: {
+			    "bundles/bit-docs-site/static.css!$css" : null
+			  }
+			}
+		</script>
+		<script type='text/javascript' data-main="bit-docs-site/static" src="./static/node_modules/steal/steal.production.js"></script>
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
+</html>

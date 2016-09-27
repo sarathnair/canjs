@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: [object Object]
+	@page ShowAList
+######################################################################## -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/bit-docs-site/static.css">
+	
+</head>
+	<body>
+		<input type="checkbox" id="nav-trigger" class="nav-trigger"/>
+	  <label for="nav-trigger">Menu</label>
+	  <div id="everything">
+  <div id="left" class="column">
+    <div class="top-left">
+      
+          <div class="brand">
+	<a href="../index.html">CanJS</a>
+</div>
+<div class="version">
+	<p>Version 3.0.0-pre</p>
+</div>
+
+      
+    </div>
+    <div class="bottom-left">
+      
+          
+
+      
+    </div>
+  </div>
+  <div id="right" class="column">
+    <div class="top-right">
+      <div class="top-right-top">
+  
+<ul class="top-right-bitovi">
+  <li class="dropdown">
+    <a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://bitovi.com">Bitovi.com</a></li>
+      <li><a href="http://bitovi.com/blog/">Blog</a></li>
+      <li><a href="http://bitovi.com/consulting/">Consulting</a></li>
+      <li><a href="http://bitovi.com/training/">Training</a></li>
+      <li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="top-right-links">
+  <li>
+    <a href="https://gitter.im/canjs/canjs">Chat</a>
+  </li>
+  <li>
+    <a href="http://forums.donejs.com/c/canjs">Forum</a>
+  </li>
+  <li>
+    <a class="github-button nav-social" href="https://github.com/canjs/canjs" data-count-href="/canjs/canjs/stargazers" data-count-api="/repos/canjs/canjs#stargazers_count">Star</a>
+  </li>
+  <li>
+    <a href="https://twitter.com/canjs" class="twitter-follow-button nav-social" data-show-count="true" data-show-screen-name="false">Follow @canjs</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </li>
+</ul>
+</div>
+<div class="breadcrumb">
+	
+	
+	<li><a href="ShowAList.html">Show a List in a Template</a></li> /
+	
+	<li class="breadcrumb-dropdown"><a href="#"> On this page</a>
+	  <ul class="on-this-page"></ul>
+	</li>
+</div>
+
+    </div>
+    <div class="bottom-right">
+      <article>
+  <section class="title">
+	<h1>Show a List in a Template</h1>
+	<ul class="title-social">
+		
+		
+	</ul>
+</section>
+
+
+
+
+  
+    <section class="description">
+    
+</section>
+
+  
+
+
+
+
+
+
+
+  
+    <section class="body">
+    <p>To make an Array observable, pass it to <a href="../docs/can.List.html">can.List</a>.</p>
+<pre><code>var people = new can.List([
+    {firstname: &quot;John&quot;, lastname: &quot;Doe&quot;},
+    {firstname: &quot;Emily&quot;, lastname: &quot;Dickinson&quot;}
+]);
+
+var frag = can.view(&quot;app-template&quot;, {people: people})
+$(&quot;#my-app&quot;).html(frag);
+</code></pre>
+<p>To show a list of data within a stache template, use the <code>#each</code> operator.</p>
+<pre><code>&lt;ul&gt;
+{{#each people}}
+  &lt;li&gt;
+    {{lastname}}, {{firstname}}
+  &lt;/li&gt;
+{{/each}}
+&lt;/ul&gt;
+</code></pre>
+<p>Inside the <code>#each</code> block, the attributes are scoped to individual
+objects in the list of <code>people</code>.</p>
+<p>To make changes to the list, use an Array method such as
+<a href="/docs/can.List.prototype.push.html">push</a>
+or <a href="/docs/can.List.prototype.pop.html">pop</a>.</p>
+<pre><code>// adds a new person
+people.push({firstname: &quot;Paul&quot;, lastname: &quot;Newman&quot;})
+// removes the last person
+people.pop()
+</code></pre>
+<iframe width="100%" height="300" src="http://jsfiddle.net/donejs/Pgbpa/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
+
+</section>
+
+  
+</article>
+      <footer><p>CanJS is part of <a href="http://donejs.com">DoneJS</a>. Created and maintained by the open source team at <a href="http://bitovi.com">Bitovi</a>. <strong>Currently v3.0.0.</strong></p></footer>
+    </div>
+  </div>
+</div>
+
+		<script type="text/javascript">
+		var docObject = {"src":{"path":"docs/can-guides/recipes/recipes-show-a-list.md"},"description":"\n","name":"ShowAList","title":"Show a List in a Template","type":"page","parent":"Recipes","order":3,"comment":" ","pathToRoot":".."};
+		</script>
+		
+		<script>
+			steal = {
+			  instantiated: {
+			    "bundles/bit-docs-site/static.css!$css" : null
+			  }
+			}
+		</script>
+		<script type='text/javascript' data-main="bit-docs-site/static" src="./static/node_modules/steal/steal.production.js"></script>
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
+</html>

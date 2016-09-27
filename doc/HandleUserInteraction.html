@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: [object Object]
+	@page HandleUserInteraction
+######################################################################## -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/bit-docs-site/static.css">
+	
+</head>
+	<body>
+		<input type="checkbox" id="nav-trigger" class="nav-trigger"/>
+	  <label for="nav-trigger">Menu</label>
+	  <div id="everything">
+  <div id="left" class="column">
+    <div class="top-left">
+      
+          <div class="brand">
+	<a href="../index.html">CanJS</a>
+</div>
+<div class="version">
+	<p>Version 3.0.0-pre</p>
+</div>
+
+      
+    </div>
+    <div class="bottom-left">
+      
+          
+
+      
+    </div>
+  </div>
+  <div id="right" class="column">
+    <div class="top-right">
+      <div class="top-right-top">
+  
+<ul class="top-right-bitovi">
+  <li class="dropdown">
+    <a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://bitovi.com">Bitovi.com</a></li>
+      <li><a href="http://bitovi.com/blog/">Blog</a></li>
+      <li><a href="http://bitovi.com/consulting/">Consulting</a></li>
+      <li><a href="http://bitovi.com/training/">Training</a></li>
+      <li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="top-right-links">
+  <li>
+    <a href="https://gitter.im/canjs/canjs">Chat</a>
+  </li>
+  <li>
+    <a href="http://forums.donejs.com/c/canjs">Forum</a>
+  </li>
+  <li>
+    <a class="github-button nav-social" href="https://github.com/canjs/canjs" data-count-href="/canjs/canjs/stargazers" data-count-api="/repos/canjs/canjs#stargazers_count">Star</a>
+  </li>
+  <li>
+    <a href="https://twitter.com/canjs" class="twitter-follow-button nav-social" data-show-count="true" data-show-screen-name="false">Follow @canjs</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </li>
+</ul>
+</div>
+<div class="breadcrumb">
+	
+	
+	<li><a href="HandleUserInteraction.html">Handle User Interaction</a></li> /
+	
+	<li class="breadcrumb-dropdown"><a href="#"> On this page</a>
+	  <ul class="on-this-page"></ul>
+	</li>
+</div>
+
+    </div>
+    <div class="bottom-right">
+      <article>
+  <section class="title">
+	<h1>Handle User Interaction</h1>
+	<ul class="title-social">
+		
+		
+	</ul>
+</section>
+
+
+
+
+  
+    <section class="description">
+    
+</section>
+
+  
+
+
+
+
+
+
+
+  
+    <section class="body">
+    <p>When a user does something, such as clicking, an <code>event</code> occurs. Event handlers specify
+how <a href="http://bitovi.com/blog/2010/10/a-crash-course-in-how-dom-events-work.html">JavaScript should respond to an event</a>.</p>
+<p>This recipe will introduce handling a click event using a <a href="http://canjs.com/docs/can.Control"><code>can.Control</code></a>.
+Using a list of people like previous recipes, clicking any individual person's name
+will remove that person from the list.</p>
+<p>Previous examples have used jQuery's event handlers:</p>
+<pre><code>$(&quot;#push&quot;).click(function(){
+  //handle the event
+});
+</code></pre>
+<p>CanJS provides a few different ways to respond to events. As well as
+making application code simpler, using CanJS to handle events can help to
+automatically prevent <a href="http://bitovi.com/blog/2012/04/zombie-apocolypse.html">memory leaks</a>.</p>
+<p>To handle events, extend <code>can.Control</code>.</p>
+<pre><code>var PeopleList = can.Control.extend({
+    //behavior
+});
+</code></pre>
+<p>You create a <code>can.Control</code> by <a href="http://canjs.com/docs/can.Control.html#sig_newcan_Control_element_options_">calling it as a constructor function</a>.
+The first argument is the element the control will be created on.
+The second argument is an object of options.</p>
+<pre><code>new PeopleList('#my-app', {people: people});
+</code></pre>
+<p>A <code>can.Control</code> handles events with functions declared with two arguments: an
+element or list of elements (using a jQuery-style selector) and a specific event.
+Below, this is 'li click', meaning when any <code>li</code> elements that are <code>clicked</code> the
+function will be called to handle the click event.</p>
+<pre><code>var PeopleList = can.Control.extend({
+  init: function( element, options ){
+    this.people = new can.List(options.people);
+    this.element.html( can.view('app-template', {
+        //defines people in the template as the observable can.List
+        people: this.people
+    }));
+  },
+  'li click': function( li, event ){
+    //Handle the click event
+  }
+};
+</code></pre>
+<p>When the constructor function is called and the <code>can.Control</code>
+is instantiated:</p>
+<ol>
+<li>The <code>init</code> method is called</li>
+<li>An observable <code>can.List</code> is created from <code>people</code></li>
+<li>The list is rendered using <code>can.view</code> so when the list changes, so will the view</li>
+</ol>
+<pre><code>var people = [
+    {firstname: &quot;John&quot;, lastname: &quot;Doe&quot;},
+    {firstname: &quot;Emily&quot;, lastname: &quot;Dickinson&quot;},
+    {firstname: &quot;William&quot;, lastname: &quot;Adams&quot;},
+    {firstname: &quot;Stevie&quot;, lastname: &quot;Nicks&quot;},
+    {firstname: &quot;Bob&quot;, lastname: &quot;Barker&quot;}
+];
+</code></pre>
+<p>When the event handler for a <code>click</code> runs, it needs a way
+to access the object associated with the <code>li</code> that was clicked.
+With the <a href="http://canjs.com/docs/can.stache.helpers.data.html"><code>data</code></a> helper,
+the element will retain a reference
+to the object it is associated with (in this case, a <code>person</code>).</p>
+<pre><code>&lt;ul&gt;
+{{#each people}}
+    &lt;li {{data 'person'}}&gt;
+        {{lastname}}, {{firstname}}
+    &lt;/li&gt;
+{{/each}}
+&lt;/ul&gt;
+</code></pre>
+<p>Finally, the event handler must be defined. In a <code>can.Control</code>,
+an event handler function <a href="http://canjs.com/docs/can.Control.html#section_Listeningtoevents">can be defined with a string containing
+a selector and an event</a>.
+In this case, these are <code>li</code> and <code>click</code>, respectively,
+since we want to handle click events on each list item.</p>
+<pre><code>var PeopleList = can.Control.extend({
+  init: function(){
+    ...
+  },
+  'li click': function( li, event ) {
+    var people = this.people;
+    var person = li.data('person');
+    var index = people.indexOf(person);
+    people.splice(index, 1);
+  }
+});
+</code></pre>
+<p>When a user clicks a list item:</p>
+<ol>
+<li>The function bound to <code>li click</code> is called</li>
+<li>The object associated with that list item is accessed using the <code>data</code> helper</li>
+<li>That 'person's data is removed from the observable list of <code>people</code></li>
+<li>The template updates automatically</li>
+</ol>
+<p>As a reminder, though event handlers respond to actions on the page,
+they should <em>change application state or data</em> (e.g. make a change to a <code>can.Map</code>)
+rather than modifying the DOM directly (e.g. toggling a class).
+This will update the page automatically, keeping code manageable.</p>
+<p>This is <em>one</em> way to handle events. Others will be covered
+in the following recipes while building widgets.</p>
+<iframe width="100%" height="300" src="http://jsfiddle.net/donejs/F9kzt/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
+
+</section>
+
+  
+</article>
+      <footer><p>CanJS is part of <a href="http://donejs.com">DoneJS</a>. Created and maintained by the open source team at <a href="http://bitovi.com">Bitovi</a>. <strong>Currently v3.0.0.</strong></p></footer>
+    </div>
+  </div>
+</div>
+
+		<script type="text/javascript">
+		var docObject = {"src":{"path":"docs/can-guides/recipes/handle-user-interaction.md"},"description":"\n","name":"HandleUserInteraction","title":"Handle User Interaction","type":"page","parent":"Recipes","order":4,"comment":" ","pathToRoot":".."};
+		</script>
+		
+		<script>
+			steal = {
+			  instantiated: {
+			    "bundles/bit-docs-site/static.css!$css" : null
+			  }
+			}
+		</script>
+		<script type='text/javascript' data-main="bit-docs-site/static" src="./static/node_modules/steal/steal.production.js"></script>
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
+</html>
